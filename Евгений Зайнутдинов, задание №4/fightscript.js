@@ -49,23 +49,24 @@ function fight (enemyNumber) {
 	var enemyForce = gladiators[enemy]["power"];
 	if (legendarus > enemyForce) {
 		legendarus += gladiators[enemy]["weapon"];
-		console.log("<p>Легендарус победил противника №" + enemyNumber + ". Его сила увеличилась на " + gladiators[enemy]["weapon"] + "</p>");
+		console.log("Легендарус победил противника №" + enemyNumber + ". Его сила увеличилась на " + gladiators[enemy]["weapon"] );
 		//document.appenChild("<p>Легендарус победил противника №" + 1 + ". Его сила увеличилась на" + gladiators[enemy]["weapon"] + "</p>");
 		var div = document.createElement('div');
 		div.innerHTML = "<p>Легендарус победил противника №" + enemyNumber + ". Его сила увеличилась на " + gladiators[enemy]["weapon"] + "</p>";
 		document.body.appendChild(div);
 		win = true;
-		if (enemyNumber == 9){
-			alert("Леегндарус - чемпион!!!");
-			console.log("Леегндарус - чемпион!!!");
+		if (enemyNumber == 10){
+			alert("fight: Легндарус - чемпион!!!");
+			console.log("fight: Легндарус - чемпион!!!");
 		}
 	}
 	else {
 		legendarus -= gladiators[enemy]["cruelty"];
-		console.log("<p>Легендарус проиграл противнику №" + enemyNumber + ". Его сила уменьшилась на " + gladiators[enemy]["cruelty"] + "</p>");
+		if (legendarus < 0){legendarus = 0;} //дабы не уйти в минус, обсуляем при отрицательных знчениях
+		console.log("Легендарус проиграл противнику №" + enemyNumber + ". Его сила уменьшилась на " + gladiators[enemy]["cruelty"] );
 		//document.appenChild("<p>Легендарус победил противника №" + 1 + ". Его сила увеличилась на" + gladiators[enemy]["weapon"] + "</p>");
 		var div = document.createElement('div');
-		div.innerHTML = "<p>Легендарус проиграл противнику №" + enemyNumber + ". Его сила уменьшилась на " + gladiators[enemy]["cruelty"] + "</p>";
+		div.innerHTML = "<p style='color: red;'>Легендарус проиграл противнику №" + enemyNumber + ". Его сила уменьшилась на " + gladiators[enemy]["cruelty"] + "</p>";
 		document.body.appendChild(div);
 		win =  false;
 	}
@@ -95,18 +96,56 @@ function testfight () {
 }
 
 function battleRow() {
-	for(var i=1; i <= 10; i++) {
+	for(var i=1; i <= 10; i++) 
+	{
 		if (win) {
 		fight(i);
-		//if (win && i==10) { alert("Леегндарус - чемпион!!!"); }
-		alert("Леегндарус - чемпион!!!");
-		console.log("запись в консоль");
-	} else {
-		break;
+		if (win && i==10) { console.log("BattleRow : Легндарус - чемпион!!!"); break;}
+		//alert("Леегндарус - чемпион!!!");
+		//console.log("запись в консоль");
+		} else {
+			break;
+		}
 	}
 }
+
+function checkStartForce ( ) {  //проверяем, было ли уже такое значение
+	var isChance = true;
+	console.log("Какие уже были стартовые силы Легендаруса: " + legendarusStartPowers);
+	for(var f=0;f<legendarusStartPowers.length;f++)
+		if (legendarus === legendarusStartPowers[f]) {
+			alert("Сейчас сила легендаруса: " + legendarus + " А раньше у него была уже сила: " + legendarusStartPowers[f]);
+			isChance = false;
+			break;
+		}
+	return isChance;
 }
 
+function BigBattle () {
+	legendarusStartPowers.length = 0; //обнуляем массив. Так мы сможем играть без перезагрузки страницы
+	do {
+		win = true;
+		if(!(checkStartForce() )) {
+		alert("Нет смысла биться дальше, Легендарус не сможет победить");
+		break;
+	}
+		legendarusStartPowers.push(legendarus);
+		battleRow();
+		console.log("текущая сила Легендаруса " + legendarus);
+		if (win) {alert("Мы выиграли");break;}
+		else {
+			
+		}
 
+	} while (true)
+	/*if(!checkStartForce()) {
+		alert("Нет смысла биться дальше, Легендарус не сможет победить");
+	}*/
+	/*if (checkStartForce()) { //если проверка стартовой силы дала добро
+		legendarusStartPowers.push(legendarus);  //добавляем в массив еще одну стартовую силу
+
+	}*/
+}
 //battleButton.onclick = testfight;
-battleButton.onclick = battleRow;
+//battleButton.onclick = battleRow;
+battleButton.onclick = BigBattle;

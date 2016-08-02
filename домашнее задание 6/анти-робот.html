@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Домашняя работа №6 || Евгений Зайнутдинов</title>
+	<style type="text/css">
+		* {
+			margin: 0 0;
+			padding: 0 0;
+			font-family: Arial;
+		}
+		.main {
+			width: 900px;
+			margin: 0 auto;
+		}
+		h1 {text-align: center;}
+		.singup {
+			height:40px;
+			width: 400px;
+			background-color: #333;
+			font-size: 25px;
+			color:#f80;
+			border: 10px solid #f80;
+			border-radius: 20px;
+			margin: 20px auto;
+			padding: 20px;
+			text-align: center;
+		}
+		.singup:hover {
+			box-shadow: 0 0 20px #666;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<h1>Общество противодействия экспансии роботов</h1>
+		<p>Братья! Роботы повсюду. Они забрались в наши машины, они контролируют наши улицы, наши заводы, отнимают у нас работу. Они следят за нами. Скоро они заберутся в наши спальни, наши кухни, наши чердаки и подвалы. Они хотят уничтожить нас, и это только вопрос времени.</p>
+		<p>Только сообща мы можем останоить их. Вступай в Братство, и дай отпор бездушным машинам!</p>
+		<div  class="singup">Вступить в Братство</div>
+		<button >[t[t</button>
+	</div>
+	<script type="text/javascript">
+		var singButton = document.querySelectorAll(".singup")[0];
+		console.log(singButton);
+		singButton.onclick = startCapcha;
+		singButton.oncontextmenu = function(){alert("r mouse"); return false;};
+		singButton.ondbclick = function(){alert("double!")};
+
+		var captchaAlreadyStarted = false;
+
+		function startCapcha() {
+		
+		var hoverPicDescr;
+		var doublePicDescr;
+		var contextPicDescr;
+
+			function randomize() {
+		hoverPicDescr = "сломанного терминатора (ха-ха!)";
+		doublePicDescr = "грустную собаку";
+		contextPicDescr = "веселую собаку";
+		}
+		randomize();
+
+			if (!captchaAlreadyStarted)
+			{ capchaDiv = document.createElement("div");
+			
+			document.querySelectorAll(".main")[0].appendChild(capchaDiv);
+			capchaDiv.innerHTML = "<p>Чтоб доказать, что ты не робот, сделай несколько простых действий. Наведи мышку на <b>" + hoverPicDescr + "</b> , дважды щелкни левок кпопкой на <b>" + doublePicDescr + "</b> , и щелкни правой кнопkой на  <b>"+ contextPicDescr + "</b></p>";}
+			captchaAlreadyStarted = true; //Это чтоб при новом нажатии на кнопку заново все не отрисовывалось. А только один раз.
+
+		};
+
+
+
+		
+
+	</script>
+</body>
+</html>
